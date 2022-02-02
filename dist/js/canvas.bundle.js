@@ -141,7 +141,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
 
 
 
@@ -180,7 +180,8 @@ var Player = /*#__PURE__*/function () {
       this.draw();
       this.position.x += this.velocity.x;
       this.position.y += this.velocity.y;
-      if (this.position.y + this.height + this.velocity.y <= canvas.height) this.velocity.y += gravity;else this.velocity.y = 0;
+      if (this.position.y + this.height + this.velocity.y <= canvas.height) this.velocity.y += gravity;
+      /*  else this.velocity.y = 0 */
     }
   }]);
 
@@ -261,6 +262,10 @@ var platforms = [new Platform({
   x: platformImage.width - 3,
   y: 470,
   image: platformImage
+}), new Platform({
+  x: platformImage.width * 2 + 100,
+  y: 470,
+  image: platformImage
 })];
 var genericObjects = [new GenericObject({
   x: -1,
@@ -280,6 +285,34 @@ var keys = {
   }
 };
 var scrollOffset = 0;
+
+function reset() {
+  platformImage = createImage(_assets_platform_png__WEBPACK_IMPORTED_MODULE_0__["default"]);
+  player = new Player();
+  platforms = [new Platform({
+    x: -1,
+    y: 470,
+    image: platformImage
+  }), new Platform({
+    x: platformImage.width - 3,
+    y: 470,
+    image: platformImage
+  }), new Platform({
+    x: platformImage.width * 2 + 100,
+    y: 470,
+    image: platformImage
+  })];
+  genericObjects = [new GenericObject({
+    x: -1,
+    y: -1,
+    image: createImage(_assets_background_png__WEBPACK_IMPORTED_MODULE_1__["default"])
+  }), new GenericObject({
+    x: -1,
+    y: -1,
+    image: createImage(_assets_hills_png__WEBPACK_IMPORTED_MODULE_2__["default"])
+  })];
+  scrollOffset = 0;
+}
 
 function animate() {
   requestAnimationFrame(animate);
@@ -331,6 +364,11 @@ function animate() {
 
   if (scrollOffset > 2000) {
     console.log('You win');
+  }
+
+  if (player.position.y > canvas.height) {
+    reset();
+    console.log('you lose');
   }
 }
 
