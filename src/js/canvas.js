@@ -13,6 +13,7 @@ const gravity = 0.5
 
 class Player{
     constructor(){
+        this.speed = 10
         this.position ={
             x:100,
             y:100
@@ -111,7 +112,7 @@ let platformImage = createImage(platform)
 
 
 let player = new Player()
-let platforms = [new Platform({
+let platforms = [/* new Platform({
     x:-1, y:470, image: platformImage
 }), 
 new Platform( {
@@ -120,12 +121,12 @@ new Platform( {
 
 new Platform( {
     x: platformImage.width * 2 + 100, y:470, image: platformImage
-})
+}) */
 
 ]
 
 let genericObjects = [
-  new GenericObject({
+  /* new GenericObject({
     x:-1,
     y:-1,
     image: createImage(background)
@@ -134,7 +135,7 @@ let genericObjects = [
     x:-1,
     y:-1,
     image: createImage(hills)
-  })
+  }) */
 
 ]
 
@@ -165,8 +166,10 @@ new Platform( {
 
 new Platform( {
     x: platformImage.width * 2 + 100, y:470, image: platformImage
+}), 
+new Platform( {
+    x: platformImage.width * 3 + 100, y:470, image: platformImage
 })
-
 ]
 
  genericObjects = [
@@ -207,9 +210,9 @@ function animate() {
 
 
     if(keys.right.pressed && player.position.x < 400){
-        player.velocity.x = 5
+        player.velocity.x = player.speed
     }else if(keys.left.pressed && player.position.x > 100){ 
-        player.velocity.x = -5
+        player.velocity.x = -player.speed
     }else {
         
         player.velocity.x = 0
@@ -217,18 +220,18 @@ function animate() {
         if(keys.right.pressed){
             scrollOffset += 5
             platforms.forEach(platform => {
-                platform.position.x -= 5
+                platform.position.x -= player.speed
             })
            genericObjects.forEach(genericObject => {
-             genericObject.position.x -=3
+             genericObject.position.x -= player.speed * .66
            })
         }else if(keys.left.pressed)
-        {   scrollOffset -= 5
+        {   scrollOffset -= player.speed
             platforms.forEach(platform => {
-                platform.position.x += 5
+                platform.position.x += player.speed
             })
             genericObjects.forEach(genericObject => {
-              genericObject.position.x +=3
+              genericObject.position.x += player.speed * .66
             })
         }
     }
@@ -253,6 +256,8 @@ function animate() {
         console.log('you lose')
     }
 }
+
+reset()
 animate()
 
 window.addEventListener('keydown', ({keyCode}) => {

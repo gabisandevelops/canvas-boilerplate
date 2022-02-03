@@ -156,6 +156,7 @@ var Player = /*#__PURE__*/function () {
   function Player() {
     _classCallCheck(this, Player);
 
+    this.speed = 10;
     this.position = {
       x: 100,
       y: 100
@@ -254,28 +255,29 @@ function createImage(imageSrc) {
 
 var platformImage = createImage(_assets_platform_png__WEBPACK_IMPORTED_MODULE_0__["default"]);
 var player = new Player();
-var platforms = [new Platform({
-  x: -1,
-  y: 470,
-  image: platformImage
-}), new Platform({
-  x: platformImage.width - 3,
-  y: 470,
-  image: platformImage
-}), new Platform({
-  x: platformImage.width * 2 + 100,
-  y: 470,
-  image: platformImage
-})];
-var genericObjects = [new GenericObject({
-  x: -1,
-  y: -1,
-  image: createImage(_assets_background_png__WEBPACK_IMPORTED_MODULE_1__["default"])
-}), new GenericObject({
-  x: -1,
-  y: -1,
-  image: createImage(_assets_hills_png__WEBPACK_IMPORTED_MODULE_2__["default"])
-})];
+var platforms = [
+  /* new Platform({
+  x:-1, y:470, image: platformImage
+  }), 
+  new Platform( {
+  x: platformImage.width - 3, y:470, image: platformImage
+  }),
+  new Platform( {
+  x: platformImage.width * 2 + 100, y:470, image: platformImage
+  }) */
+];
+var genericObjects = [
+  /* new GenericObject({
+    x:-1,
+    y:-1,
+    image: createImage(background)
+  }),
+  new GenericObject({
+    x:-1,
+    y:-1,
+    image: createImage(hills)
+  }) */
+];
 var keys = {
   right: {
     pressed: false
@@ -299,6 +301,10 @@ function reset() {
     image: platformImage
   }), new Platform({
     x: platformImage.width * 2 + 100,
+    y: 470,
+    image: platformImage
+  }), new Platform({
+    x: platformImage.width * 3 + 100,
     y: 470,
     image: platformImage
   })];
@@ -329,27 +335,27 @@ function animate() {
   player.update();
 
   if (keys.right.pressed && player.position.x < 400) {
-    player.velocity.x = 5;
+    player.velocity.x = player.speed;
   } else if (keys.left.pressed && player.position.x > 100) {
-    player.velocity.x = -5;
+    player.velocity.x = -player.speed;
   } else {
     player.velocity.x = 0;
 
     if (keys.right.pressed) {
       scrollOffset += 5;
       platforms.forEach(function (platform) {
-        platform.position.x -= 5;
+        platform.position.x -= player.speed;
       });
       genericObjects.forEach(function (genericObject) {
-        genericObject.position.x -= 3;
+        genericObject.position.x -= player.speed * .66;
       });
     } else if (keys.left.pressed) {
-      scrollOffset -= 5;
+      scrollOffset -= player.speed;
       platforms.forEach(function (platform) {
-        platform.position.x += 5;
+        platform.position.x += player.speed;
       });
       genericObjects.forEach(function (genericObject) {
-        genericObject.position.x += 3;
+        genericObject.position.x += player.speed * .66;
       });
     }
   }
@@ -372,6 +378,7 @@ function animate() {
   }
 }
 
+reset();
 animate();
 window.addEventListener('keydown', function (_ref3) {
   var keyCode = _ref3.keyCode;
