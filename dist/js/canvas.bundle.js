@@ -125,6 +125,71 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./src/assets/platformSmallTall.png":
+/*!******************************************!*\
+  !*** ./src/assets/platformSmallTall.png ***!
+  \******************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = (__webpack_require__.p + "0587f9be8e442eb74b2fe283bbf1a947.png");
+
+/***/ }),
+
+/***/ "./src/assets/spriteRunLeft.png":
+/*!**************************************!*\
+  !*** ./src/assets/spriteRunLeft.png ***!
+  \**************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = (__webpack_require__.p + "c67ea51444aafa9bdcd5bdfd4f4a55bb.png");
+
+/***/ }),
+
+/***/ "./src/assets/spriteRunRight.png":
+/*!***************************************!*\
+  !*** ./src/assets/spriteRunRight.png ***!
+  \***************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = (__webpack_require__.p + "a2f75989924952a7e49ce0405d487c93.png");
+
+/***/ }),
+
+/***/ "./src/assets/spriteStandLeft.png":
+/*!****************************************!*\
+  !*** ./src/assets/spriteStandLeft.png ***!
+  \****************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = (__webpack_require__.p + "11514f48f22f6d8e3cf748e45e3e1ffb.png");
+
+/***/ }),
+
+/***/ "./src/assets/spriteStandRight.png":
+/*!*****************************************!*\
+  !*** ./src/assets/spriteStandRight.png ***!
+  \*****************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = (__webpack_require__.p + "01e8f15e899155c68950c40e0a6b8df0.png");
+
+/***/ }),
+
 /***/ "./src/js/canvas.js":
 /*!**************************!*\
   !*** ./src/js/canvas.js ***!
@@ -137,11 +202,21 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _assets_platform_png__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../assets/platform.png */ "./src/assets/platform.png");
 /* harmony import */ var _assets_background_png__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../assets/background.png */ "./src/assets/background.png");
 /* harmony import */ var _assets_hills_png__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../assets/hills.png */ "./src/assets/hills.png");
+/* harmony import */ var _assets_platformSmallTall_png__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../assets/platformSmallTall.png */ "./src/assets/platformSmallTall.png");
+/* harmony import */ var _assets_spriteRunLeft_png__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../assets/spriteRunLeft.png */ "./src/assets/spriteRunLeft.png");
+/* harmony import */ var _assets_spriteRunRight_png__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../assets/spriteRunRight.png */ "./src/assets/spriteRunRight.png");
+/* harmony import */ var _assets_spriteStandLeft_png__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../assets/spriteStandLeft.png */ "./src/assets/spriteStandLeft.png");
+/* harmony import */ var _assets_spriteStandRight_png__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../assets/spriteStandRight.png */ "./src/assets/spriteStandRight.png");
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
+
+
+
+
+
 
 
 
@@ -165,19 +240,40 @@ var Player = /*#__PURE__*/function () {
       x: 0,
       y: 1
     };
-    this.width = 30;
-    this.height = 30;
+    this.width = 66;
+    this.height = 150;
+    this.image = createImage(_assets_spriteStandRight_png__WEBPACK_IMPORTED_MODULE_7__["default"]);
+    this.frames = 0;
+    this.sprites = {
+      stand: {
+        right: createImage(_assets_spriteStandRight_png__WEBPACK_IMPORTED_MODULE_7__["default"]),
+        left: createImage(_assets_spriteStandLeft_png__WEBPACK_IMPORTED_MODULE_6__["default"]),
+        cropWidth: 177,
+        width: 66
+      },
+      run: {
+        right: createImage(_assets_spriteRunRight_png__WEBPACK_IMPORTED_MODULE_5__["default"]),
+        left: createImage(_assets_spriteRunLeft_png__WEBPACK_IMPORTED_MODULE_4__["default"]),
+        cropWidth: 341,
+        width: 127.875
+      }
+    };
+    this.currentSprite = this.sprites.stand.right;
+    this.currentSpriteCropWidth = 177;
   }
 
   _createClass(Player, [{
     key: "draw",
     value: function draw() {
-      c.fillStyle = 'red';
-      c.fillRect(this.position.x, this.position.y, this.width, this.height);
+      c.drawImage(this.currentSprite, this.currentSpriteCropWidth * this.frames, 0, this.currentSpriteCropWidth, 400, this.position.x, this.position.y, this.width, this.height);
+      /* c.fillStyle = 'red'
+      c.fillRect(this.position.x, this.position.y, this.width, this.height) */
     }
   }, {
     key: "update",
     value: function update() {
+      this.frames++;
+      if (this.frames > 59 && (this.currentSprite === this.sprites.stand.right || this.currentSprite === this.sprites.stand.left)) this.frames = 0;else if (this.frames > 29 && (this.currentSprite === this.sprites.run.right || this.currentSprite === this.sprites.run.left)) this.frames = 0;
       this.draw();
       this.position.x += this.velocity.x;
       this.position.y += this.velocity.y;
@@ -254,6 +350,7 @@ function createImage(imageSrc) {
 }
 
 var platformImage = createImage(_assets_platform_png__WEBPACK_IMPORTED_MODULE_0__["default"]);
+var platformSmall = createImage(_assets_platformSmallTall_png__WEBPACK_IMPORTED_MODULE_3__["default"]);
 var player = new Player();
 var platforms = [
   /* new Platform({
@@ -278,6 +375,7 @@ var genericObjects = [
     image: createImage(hills)
   }) */
 ];
+var currentKey;
 var keys = {
   right: {
     pressed: false
@@ -292,6 +390,10 @@ function reset() {
   platformImage = createImage(_assets_platform_png__WEBPACK_IMPORTED_MODULE_0__["default"]);
   player = new Player();
   platforms = [new Platform({
+    x: platformImage.width * 4 + 300 - 2 + platformSmall.width,
+    y: 270,
+    image: platformSmall
+  }), new Platform({
     x: -1,
     y: 470,
     image: platformImage
@@ -304,7 +406,15 @@ function reset() {
     y: 470,
     image: platformImage
   }), new Platform({
-    x: platformImage.width * 3 + 100,
+    x: platformImage.width * 3 + 300,
+    y: 470,
+    image: platformImage
+  }), new Platform({
+    x: platformImage.width * 4 + 300 - 2,
+    y: 470,
+    image: platformImage
+  }), new Platform({
+    x: platformImage.width * 5 + 700 - 2,
     y: 470,
     image: platformImage
   })];
@@ -336,7 +446,7 @@ function animate() {
 
   if (keys.right.pressed && player.position.x < 400) {
     player.velocity.x = player.speed;
-  } else if (keys.left.pressed && player.position.x > 100) {
+  } else if (keys.left.pressed && player.position.x > 100 || keys.left.pressed && scrollOffset == 0 && player.position.x > 0) {
     player.velocity.x = -player.speed;
   } else {
     player.velocity.x = 0;
@@ -349,7 +459,7 @@ function animate() {
       genericObjects.forEach(function (genericObject) {
         genericObject.position.x -= player.speed * .66;
       });
-    } else if (keys.left.pressed) {
+    } else if (keys.left.pressed && scrollOffset > 0) {
       scrollOffset -= player.speed;
       platforms.forEach(function (platform) {
         platform.position.x += player.speed;
@@ -366,9 +476,28 @@ function animate() {
     if (player.position.y + player.height <= platform.position.y && player.position.y + player.height + player.velocity.y >= platform.position.y && player.position.x + player.width >= platform.position.x && player.position.x <= platform.position.x + platform.width) {
       player.velocity.y = 0;
     }
-  });
+  }); // sprite switching
 
-  if (scrollOffset > 2000) {
+  if (keys.right.pressed && currentKey === 'right' && player.currentSprite !== player.sprites.run.right) {
+    player.frames = 1;
+    player.currentSprite = player.sprites.run.right;
+    player.currentSpriteCropWidth = player.sprites.run.cropWidth;
+    player.width = player.sprites.run.width;
+  } else if (keys.left.pressed && currentKey == 'left' && player.currentSprite !== player.sprites.run.left) {
+    player.currentSprite = player.sprites.run.left;
+    player.currentSpriteCropWidth = player.sprites.run.cropWidth;
+    player.width = player.sprites.run.width;
+  } else if (!keys.left.pressed && currentKey == 'left' && player.currentSprite !== player.sprites.stand.left) {
+    player.currentSprite = player.sprites.stand.left;
+    player.currentSpriteCropWidth = player.sprites.stand.cropWidth;
+    player.width = player.sprites.stand.width;
+  } else if (!keys.right.pressed && currentKey == 'right' && player.currentSprite !== player.sprites.stand.right) {
+    player.currentSprite = player.sprites.stand.right;
+    player.currentSpriteCropWidth = player.sprites.stand.cropWidth;
+    player.width = player.sprites.stand.width;
+  }
+
+  if (scrollOffset > platformImage.width * 3) {
     console.log('You win');
   }
 
@@ -387,16 +516,17 @@ window.addEventListener('keydown', function (_ref3) {
     case 65:
       console.log('left');
       keys.left.pressed = true;
+      currentKey = 'left';
       break;
 
     case 83:
       console.log('down');
-      player.velocity.y += 10;
       break;
 
     case 68:
       console.log('right');
       keys.right.pressed = true;
+      currentKey = 'right';
       break;
 
     case 87:
@@ -427,7 +557,6 @@ window.addEventListener('keyup', function (_ref4) {
 
     case 87:
       console.log('up');
-      player.velocity.y -= 1;
       break;
   }
 });
